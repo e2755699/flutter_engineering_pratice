@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_engineering_pratice/utils/battery_level.dart';
 import 'package:flutter_engineering_pratice/observer_pattern_demo/stock_app_screen.dart';
+import 'package:flutter_engineering_pratice/observer_pattern_demo/factory_stock_screen.dart';
 
 void main() {
   // WidgetTest().widgetCreate();
@@ -49,6 +50,19 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
               ),
               child: const Text('觀察者模式 (Observer Pattern)'),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const FactoryStockScreen()),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+              ),
+              child: const Text('工廠模式 (Factory Pattern)'),
             ),
             const SizedBox(height: 16),
             ElevatedButton(
