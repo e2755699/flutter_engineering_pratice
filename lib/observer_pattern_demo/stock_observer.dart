@@ -125,7 +125,17 @@ class StockInvestor implements StockObserver {
   final List<String> interestedStocks = [];
   LogCallback? _logCallback;
   
+  // 基本構造函數
   StockInvestor(this.name);
+  
+  // 工廠構造函數 - 創建投資者並設置關注的股票
+  factory StockInvestor.withStocks(String name, List<String> stocks) {
+    final investor = StockInvestor(name);
+    for (var stock in stocks) {
+      investor.followStock(stock);
+    }
+    return investor;
+  }
   
   @override
   set logCallback(LogCallback callback) {
@@ -166,7 +176,17 @@ class StockAnalyst implements StockObserver {
   final Map<String, double> priceThresholds = {};
   LogCallback? _logCallback;
   
+  // 基本構造函數
   StockAnalyst(this.name);
+  
+  // 工廠構造函數 - 創建分析師並設置價格閾值
+  factory StockAnalyst.withThresholds(String name, Map<String, double> thresholds) {
+    final analyst = StockAnalyst(name);
+    thresholds.forEach((stock, threshold) {
+      analyst.setThreshold(stock, threshold);
+    });
+    return analyst;
+  }
   
   @override
   set logCallback(LogCallback callback) {

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'stock_observer.dart';
-import 'stock_observer_factory.dart';
+// 不再需要導入工廠類，我們直接使用工廠構造函數
+// import 'stock_observer_factory.dart';
 
 // 股票價格變化枚舉
 enum StockPriceChange {
@@ -34,7 +35,7 @@ class FactoryStockScreenState extends State<FactoryStockScreen> with TickerProvi
   // 股票市場
   final StockMarket _stockMarket = StockMarket();
   
-  // 使用工廠方法創建觀察者
+  // 使用工廠構造函數創建觀察者
   late final StockInvestor _investor1;
   late final StockInvestor _investor2;
   late final StockAnalyst _analyst;
@@ -56,12 +57,12 @@ class FactoryStockScreenState extends State<FactoryStockScreen> with TickerProvi
   void initState() {
     super.initState();
     
-    // 使用工廠模式創建觀察者
-    _investor1 = StockObserverFactory.createInvestor('張先生');
-    _investor2 = StockObserverFactory.createInvestor('李女士');
+    // 使用工廠構造函數創建觀察者
+    _investor1 = StockInvestor.withStocks('張先生', ['AAPL', 'TSLA']);
+    _investor2 = StockInvestor.withStocks('李女士', ['GOOGL', 'BABA']);
     
-    // 使用工廠模式創建分析師，並設置閾值
-    _analyst = StockObserverFactory.createAnalyst('王分析師', {
+    // 使用工廠構造函數創建分析師，並設置閾值
+    _analyst = StockAnalyst.withThresholds('王分析師', {
       'AAPL': 190.0,
       'GOOGL': 150.0,
       'TSLA': 220.0,
@@ -74,12 +75,6 @@ class FactoryStockScreenState extends State<FactoryStockScreen> with TickerProvi
     _stockMarket.registerObserver(_investor1);
     _stockMarket.registerObserver(_investor2);
     _stockMarket.registerObserver(_analyst);
-    
-    // 觀察者設置自己感興趣的股票
-    _investor1.followStock('AAPL');
-    _investor1.followStock('TSLA');
-    _investor2.followStock('GOOGL');
-    _investor2.followStock('BABA');
     
     // 創建一個日誌收集器
     _setupLogCollector();

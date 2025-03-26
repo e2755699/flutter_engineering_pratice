@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_engineering_pratice/utils/battery_level.dart';
 import 'package:flutter_engineering_pratice/observer_pattern_demo/stock_app_screen.dart';
 import 'package:flutter_engineering_pratice/observer_pattern_demo/factory_stock_screen.dart';
+import 'package:flutter_engineering_pratice/component/button_demo_page.dart';
+import 'package:flutter_engineering_pratice/component/card_demo_page.dart';
+import 'package:flutter_engineering_pratice/component/yellow_ribbon_button.dart';
 
 void main() {
   // WidgetTest().widgetCreate();
@@ -36,61 +39,77 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const StockAppScreen()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              YellowRibbonButton(
+                label: '觀察者模式 (Observer Pattern)',
+                width: 280,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const StockAppScreen()),
+                  );
+                },
               ),
-              child: const Text('觀察者模式 (Observer Pattern)'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const FactoryStockScreen()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+              const SizedBox(height: 16),
+              YellowRibbonButton(
+                label: '工廠模式 (Factory Pattern)',
+                width: 280,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const FactoryStockScreen()),
+                  );
+                },
               ),
-              child: const Text('工廠模式 (Factory Pattern)'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const BatteryLevelWidget()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+              const SizedBox(height: 16),
+              YellowRibbonButton(
+                label: '電池電量檢測',
+                width: 280,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const BatteryLevelWidget()),
+                  );
+                },
               ),
-              child: const Text('電池電量檢測'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LifecycleAwareWidget()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+              const SizedBox(height: 16),
+              YellowRibbonButton(
+                label: '生命週期監聽',
+                width: 280,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LifecycleAwareWidget()),
+                  );
+                },
               ),
-              child: const Text('生命週期監聽'),
-            ),
-          ],
+              const SizedBox(height: 16),
+              YellowRibbonButton(
+                label: '黃絲帶按鈕示例',
+                width: 280,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ButtonDemoPage()),
+                  );
+                },
+              ),
+              const SizedBox(height: 16),
+              YellowRibbonButton(
+                label: '學生卡片示例',
+                width: 280,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const CardDemoPage()),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -292,12 +311,13 @@ class _BatteryLevelWidgetState extends State<BatteryLevelWidget> {
               batteryLevel != null ? '$batteryLevel%' : '讀取中...',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            ElevatedButton(
-                onPressed: () {
-                  _getBattery();
-                  setState(() {});
-                },
-                child: Text('點擊獲取電量'))
+            YellowRibbonButton(
+              label: '點擊獲取電量',
+              onPressed: () {
+                _getBattery();
+                setState(() {});
+              },
+            )
           ],
         ),
       ),

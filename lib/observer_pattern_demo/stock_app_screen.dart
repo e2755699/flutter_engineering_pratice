@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'stock_observer.dart';
+import 'package:flutter_engineering_pratice/component/yellow_ribbon_button.dart';
 
 // 股票價格變化狀態枚舉
 enum StockPriceChange {
@@ -413,7 +414,7 @@ class AnalystCard extends StatefulWidget {
 
 class _AnalystCardState extends State<AnalystCard> {
   String? selectedStock;
-  TextEditingController thresholdController = TextEditingController();
+  final TextEditingController thresholdController = TextEditingController();
   
   @override
   void dispose() {
@@ -433,14 +434,18 @@ class _AnalystCardState extends State<AnalystCard> {
             Text(widget.name, style: const TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 6),
             const Text('設置的閾值:'),
-            Wrap(
-              spacing: 4,
-              children: widget.thresholds.entries.map((e) => Chip(
-                label: Text('${e.key}: ¥${e.value}', style: const TextStyle(fontSize: 12)),
-                backgroundColor: Colors.amber.shade100,
-              )).toList(),
-            ),
-            const SizedBox(height: 8),
+            widget.thresholds.isEmpty
+                ? const Text('尚未設置閾值', style: TextStyle(fontStyle: FontStyle.italic))
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: widget.thresholds.entries.map((e) {
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 4),
+                        child: Text('${e.key}: ${e.value}', style: const TextStyle(fontSize: 12)),
+                      );
+                    }).toList(),
+                  ),
+            const SizedBox(height: 12),
             Row(
               children: [
                 Expanded(
@@ -472,7 +477,8 @@ class _AnalystCardState extends State<AnalystCard> {
               ],
             ),
             const SizedBox(height: 8),
-            ElevatedButton(
+            YellowRibbonButton(
+              label: '設置閾值',
               onPressed: () {
                 if (selectedStock != null && thresholdController.text.isNotEmpty) {
                   final threshold = double.tryParse(thresholdController.text);
@@ -482,7 +488,6 @@ class _AnalystCardState extends State<AnalystCard> {
                   }
                 }
               },
-              child: const Text('設置閾值'),
             ),
           ],
         ),
